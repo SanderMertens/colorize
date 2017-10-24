@@ -12,7 +12,7 @@ and then run it with:
 ```
 
 ## Embed it in your own project
-You only need to call a single function to colorize your strings. Simply copy the files `buffer.c`, `buffer.h`, `colorize.c`, colorize.h` and `base.h` in your project. Include `colorize.h` in the file where you want to use the function, then do this:
+You only need to call a single function to colorize your strings. Simply copy the files `buffer.c`, `buffer.h`, `colorize.c`, `colorize.h` and `base.h` in your project. Include `colorize.h` in the file where you want to use the function, then do this:
 
 ```c
 char *msg = colorize("My 'pretty' colorized string");
