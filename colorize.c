@@ -473,7 +473,37 @@ char* colorize(
 
 /* -- DEMO -- */
 
+#ifdef _WIN32
+void ut_enable_console_color_for_handle(int io_handle)
+{
+    HANDLE hOut = GetStdHandle(io_handle);
+    if (hOut == INVALID_HANDLE_VALUE)
+        return;
+
+    DWORD dwMode = 0;
+    if (!GetConsoleMode(hOut, &dwMode))
+        return;
+
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    SetConsoleMode(hOut, dwMode);
+}
+
+void ut_enable_console_color(void)
+{
+    #if NTDDI_VERSION > NTDDI_WINBLUE
+    ut_enable_console_color_for_handle(STD_OUTPUT_HANDLE);
+    ut_enable_console_color_for_handle(STD_ERROR_HANDLE);
+    #endif
+}
+#else
+void ut_enable_console_color(void)
+{
+}
+#endif
+
 int main(int argc, char * argv[]) {
+    ut_enable_console_color();
+
     char *msg = colorize("Colorize 'demo' version 1.0");
     printf ("%s\n", msg);
     free (msg);
